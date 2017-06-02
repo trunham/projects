@@ -69,7 +69,7 @@ public class APIHandlerUsingReflection {
 
             // Check the method exists
             try {
-                method = Handler.class.getDeclaredMethod(method1, JSONObject.class, String.class);
+                method = APIHandlerUsingReflection.class.getDeclaredMethod(method1, JSONObject.class, String.class);
             } catch (NoSuchMethodException e) {
             
                 // Print the error
@@ -85,7 +85,7 @@ public class APIHandlerUsingReflection {
             // Attempt to execute the method
             try {
                 assert method != null;
-                method.invoke(new Handler(), new JSONObject(data), email);
+                method.invoke(new APIHandlerUsingReflection(), new JSONObject(data), email);
             } catch (IllegalAccessException | InvocationTargetException e) {
             
                 // Print the error
