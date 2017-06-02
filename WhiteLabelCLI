@@ -4,24 +4,24 @@
 #	       or called via a server-side application
 
 # Installation: Ensure the file is executable,
-# run sudo ./cli_name install (add copy to duplicate the file instead of moving it)
+# run sudo ./WhiteLabelCLI install (add copy to duplicate the file instead of moving it)
 
 if [ $# -eq 0 ];
 	then
 
 	# No argument was supplied so echo out the option parameters
 	echo "No arguments supplied"
-	echo "Usage:	cli_name [command] [parameter]"
+	echo "Usage:	WhiteLabelCLI [command] [parameter]"
 	echo "Options:"
-	echo "	instal:	installs the package and makes it available from the CLI through 'cli_name'"
+	echo "	instal:	installs the package and makes it available from the CLI through 'WhiteLabelCLI'"
 	echo "	build:	builds the application, accepts parameters - [sass | js | deploy]"
-	echo "	create:	creates an instance of cli_name and generates a virtual host for it"
+	echo "	create:	creates an instance of WhiteLabelCLI and generates a virtual host for it"
 
 else
 	if [ "$1" == "install" ];
 		then
 
-		# the user is installing cli_name, move/copy the current
+		# the user is installing WhiteLabelCLI, move/copy the current
 		# file to /usr/local/bin and make it accessible from the command line
 
 		Directory="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -29,24 +29,24 @@ else
 		if [ "$2" == "copy" ];
 			then
 
-			cp $Directory/cli_name /usr/local/bin
+			cp $Directory/WhiteLabelCLI /usr/local/bin
 
 		else
-			mv $Directory/cli_name /usr/local/bin
+			mv $Directory/WhiteLabelCLI /usr/local/bin
 
 		fi
 
-		chmod u+x /usr/local/bin/cli_name
+		chmod u+x /usr/local/bin/WhiteLabelCLI
 
 		echo "Install complete"
-		echo "You can now call cli_name via the command line with: cli_name [command]"
+		echo "You can now call WhiteLabelCLI via the command line with: WhiteLabelCLI [command]"
 
 	elif [ "$1" == "start" ];
 		then
 
 		# Start an application instance (use in the relevant app directory)	
 
-		echo "Starting cli_name..."
+		echo "Starting WhiteLabelCLI..."
 
 		npm run start
 
@@ -77,7 +77,7 @@ else
 			npm run-script deploy
 
 		else
-			echo "Building cli_name & App..."
+			echo "Building WhiteLabelCLI & App..."
 
 			npm run-script build
 			npm run-script sass
@@ -89,25 +89,25 @@ else
 
 		# Create an instance of our web app with a domain name attached
 
-		echo "Creating cli_name instance..."
+		echo "Creating WhiteLabelCLI instance..."
 
 		if [ -z ${2+x} ];		
 			then
 			
 			# Create a virtual host in apache using the domain name supplied
-			cp /etc/apache2/sites-available/cli_name_template.conf /etc/apache2/sites-available/$2.conf 
+			cp /etc/apache2/sites-available/WhiteLabelCLI_template.conf /etc/apache2/sites-available/$2.conf 
 			sed -i -e "s/aliassir/$2/g" /etc/apache2/sites-available/$2.conf
 			a2ensite $2.conf
 			service apache2 restart
 
 			# Copy and build an instance of our white label web application
-			cp -r /home/user/cli_name-appsource /home/user/sites/$2
+			cp -r /home/user/WhiteLabelCLI-appsource /home/user/sites/$2
 			chown -R user:user /home/user/sites/$2
 			cd /home/user/sites/$2
 			npm run build
 			npm run start
 
-			echo "cli_name installed, please visit https://www.YOUR_URL/admin/configuration to complete your setup"
+			echo "WhiteLabelCLI installed, please visit https://www.YOUR_URL/admin/configuration to complete your setup"
 
 		else
 			echo "No domain name set"
