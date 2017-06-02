@@ -16,7 +16,6 @@ define(
         'modules/site/default'
     ],
     function(React, Router, BrowserHistory, Cookie, Sitemap, App, Default) {
-
         var { createRoutesFromReactChildren, Route } = Router;
 
         /**
@@ -60,10 +59,9 @@ define(
          * @returns {Route}
          */
         var routeObjectParser = function(routes, routeID) {
-
             var routeObject;
-
             if(routes.submenu) {
+            
                 // If the route does have a submenu map it
                 var submenu = routes.submenu.map(function(options, index) {
 
@@ -83,11 +81,15 @@ define(
                     }
 
                 });
+                
                 // If it had a submenu return the nested route object
                 routeObject = nestedRouteParser(routeID, routes.link, submenu, routes.template);
+                
             } else {
+            
                 // If the route does not have a submenu simply return it
                 routeObject = singleRouteParser(routeID, routes.link, routes.template);
+                
             }
             return routeObject;
         };
@@ -100,8 +102,10 @@ define(
         var generateRoutes = function(){
             return Sitemap.map(function(routes, mainIndex) {
                 var routeID = routes.name;
-                    // retrieve full route object
-                    return routeObjectParser(routes, routeID);
+                
+                // retrieve full route object
+                return routeObjectParser(routes, routeID);
+                    
             });
         };
 
@@ -119,10 +123,7 @@ define(
          */
         Router.Router.run(Tree, BrowserHistory, null, function (errors, state) {
             Component = state.components[1];
-            console.log(window.location.pathname, Tree);
-
             React.render(<Default template={state.branch[1].template} />, document.getElementById('index'));
-
         });
 
     }
